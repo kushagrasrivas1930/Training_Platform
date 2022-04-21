@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "express": "^4.17.3",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15"
+  },
+  "name": "product",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kushagrasrivas1930/Training_Platform.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kushagrasrivas1930/Training_Platform/issues"
+  },
+  "homepage": "https://github.com/kushagrasrivas1930/Training_Platform#readme",
+  "description": ""
+}
