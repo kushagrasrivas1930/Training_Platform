@@ -1,52 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="Login.css" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="Heading-Container">
+			<p style="padding-top: 0.25em">Training Platform</p>
 
-<head>
-    <link rel="stylesheet" href="/styles.css">
-</head>
+			<div class="header-buttons-container">
+				<ul>
+					<p><a href="./FacultyLogin.html"> Faculty Login</a></p>
+				</ul>
 
-<body>
-    <section>
-        <div class="container">
-            <div class="user signinBx">
-                <div class="imgBx"><img
-                        src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Login%20and%20Registration%20Form/img1.jpg"
-                        alt="" /></div>
-                <div class="formBx">
-                    <form action="" onsubmit="return false;">
-                        <h2>Sign In</h2>
-                        <input type="text" name="" placeholder="Username" />
-                        <input type="password" name="" placeholder="Password" />
-                        <input type="submit" name="" value="Login" />
-                        <p class="signup">
-                            Don't have an account ?
-                            <a href="#" onclick="toggleForm();">Sign Up.</a>
-                        </p>
-                    </form>
-                </div>
-            </div>
-            <div class="user signupBx">
-                <div class="formBx">
-                    <form action="" onsubmit="return false;">
-                        <h2>Create an account</h2>
-                        <input type="text" name="" placeholder="Username" />
-                        <input type="email" name="" placeholder="Email Address" />
-                        <input type="password" name="" placeholder="Create Password" />
-                        <input type="password" name="" placeholder="Confirm Password" />
-                        <input type="submit" name="" value="Sign Up" />
-                        <p class="signup">
-                            Already have an account ?
-                            <a href="#" onclick="toggleForm();">Sign in.</a>
-                        </p>
-                    </form>
-                </div>
-                <div class="imgBx"><img
-                        src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Login%20and%20Registration%20Form/img2.jpg"
-                        alt="" /></div>
-            </div>
-        </div>
-    </section>
-    <script src="/loginJS.js"></script>
-</body>
+				<ul>
+					<p><a href="./Signup.html">Signup</a></p>
+				</ul>
+			</div>
+		</div>
 
+		<div class="body-container">
+			<div class="login-container">
+				<p class="title">LOGIN</p>
+				<form action="">
+					<input type="text" placeholder="Enter Username" />
+					<input type="password" placeholder="Enter Password" />
+
+					<div class="button-container">
+						<button class="sub-button" type="submit">LOGIN</button>
+
+						<a href="http://">Forgot Password</a>
+					</div>
+					<ul class="newuser-container">
+						<ul>
+							<a class="new-reg" href="http://">New User? Register Here</a>
+						</ul>
+					</ul>
+				</form>
+			</div>
+
+			<div class="right-image-container">
+				<img src="./img.svg" alt="" />
+			</div>
+		</div>
+	</body>
 </html>
