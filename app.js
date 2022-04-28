@@ -56,7 +56,11 @@ app.post('/login', function (req, res) {
     var password =  req.body.Password ;
     console.log(username + ' ' + password);
     db.query("select * from student_details where RegistrationNo = ? and Password = ?" , [username, password], function(err, result) {
-        if (err) console.log(err);
+        console.log(result);
+        if (result == 0 ) {
+            console.log('No such user present TRY AGAIN');
+            res.redirect('/login.html');
+        }
         else {
             console.log("Successfully logged in !");
             res.redirect('/login.html');
