@@ -1,7 +1,18 @@
 const express = require('express')
 const mysql = require('mysql')
 const bodyParser = require('body-parser')
+const crypto = require('crypto')
+const algorithm = 'aes-256-cbc'; //Using AES encryption
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
+const ejs = require('ejs');
+
 require("dotenv").config()
+
+var testTitle;
+var testID;
+var questionID;
+var totalQuestion = 1;
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -10,6 +21,8 @@ app.listen(3000, () => {
 })
 
 app.use(express.static(__dirname))
+
+app.set('view engine', 'ejs')
 
 app.get("/", (req, res) => {
     res.sendFile(__dirname + '/login.html')
@@ -51,7 +64,7 @@ app.post('/signup', function (req, res) {
         res.redirect('/login.html');
     }
     else {
-        
+
         res.redirect('/signup.html')
     }
 
@@ -75,7 +88,7 @@ app.post('/login', function (req, res) {
     })
 })
 
-app.post('/faculty-login', function(req, res) {
+app.post('/faculty-login', function (req, res) {
     var username = req.body.Username;
     var password = req.body.Password;
     console.log(username + ' ' + password);
@@ -87,12 +100,12 @@ app.post('/faculty-login', function(req, res) {
         }
         else {
             console.log("Successfully logged in !");
-            res.redirect('/FacultyLogin.html');
+            res.redirect('/AddTest.html');
         }
     })
 })
 
-app.post('/faculty-signup', function(req, res) {
+app.post('/faculty-signup', function (req, res) {
     var name = req.body.fn + " " + req.body.ln;
     var empID = req.body.empID;
     var password = req.body.ps;
@@ -109,7 +122,62 @@ app.post('/faculty-signup', function(req, res) {
         res.redirect('/FacultyLogin.html');
     }
     else {
-        
+
         res.redirect('/FacultySignup.html')
     }
+})
+
+app.post('/createTest', function (req, res) {
+    testTitle = req.body.testTitle;
+    testID = req.body.testID;
+    db.query('select TestId from test_details where TestID = ?', testID, function (err, result) {
+        if (result == 0) {
+            db.query('insert into test_details (TestID, TestTitle) values (?, ?)', [testID, testTitle], function (err, result) {
+                if (err) console.log(err);
+                console.log("Test Created successfully");
+                aQuesID = tQuesID = eQuesID = 1;
+                res.render(__dirname + '/AddQues.ejs', { test_title: testTitle, totalQuestion: totalQuestion });
+            })
+        }
+        else {
+            console.log('Enter a unique TestID');
+            res.redirect('/AddTest.html');
+        }
+    })
+
+
+})
+
+app.post('/addQues', function (req, res) {
+    var section = req.body.topic_section_dropdown;
+    var question = req.body.Question_Des;
+    var oA = req.body.option_details_A;
+    var oB = req.body.option_details_B;
+    var oC = req.body.option_details_C;
+    var oD = req.body.option_details_D;
+    var corrOption = req.body.options;
+    var sectionID;
+    if (section == 'Aptitude') {
+        sectionID = 'A';
+        questionID = aQuesID;
+        aQuesID++;
+    }
+    if (section == 'Technical') {
+        sectionID = 'T';
+        questionID = tQuesID;
+        tQuesID++;
+    }
+    if (section == 'English') {
+        sectionID = 'E';
+        questionID = eQuesID;
+        eQuesID++;
+    }
+    db.query('insert into question_bank (TestID, SectionID, QuestionID, Question, OptionA, OptionB, OptionC, OptionD, Correct) values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [testID, sectionID, questionID, question, oA, oB, oC, oD, corrOption], function (err, result) {
+            if (err) console.log(err);
+            console.log('Question Added successfully');
+        })
+    totalQuestion++;
+    res.render(__dirname + '/AddQues.ejs', { test_title: testTitle, totalQuestion: totalQuestion });
+    
 })
