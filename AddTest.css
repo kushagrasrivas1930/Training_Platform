@@ -112,10 +112,10 @@ input {
 	background-color: #e9f8ff;
 	border-radius: 5px;
 	line-height: 2em;
-	-webkit-border-radius: ;
-	-moz-border-radius: ;
-	-ms-border-radius: ;
-	-o-border-radius: ;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
 }
 
 input::placeholder {
