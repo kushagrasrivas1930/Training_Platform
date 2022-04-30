@@ -81,8 +81,9 @@
 .login-container {
 	border: 1px #b9e0fa;
 	padding: 3em;
+	padding-bottom: 4em;
 	background-color: rgb(255, 255, 255);
-	height: 50vh;
+	height: fit-content;
 	border-radius: 25px;
 	-webkit-border-radius: 25px;
 	-moz-border-radius: 25px;
