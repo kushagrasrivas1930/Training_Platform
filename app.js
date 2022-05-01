@@ -52,6 +52,10 @@ app.get("/AddQues1", (req, res) => {
     res.render('AddQues.ejs')
 })
 
+app.get("/TestDetails_Information", (req, res) => {
+    res.render('pages/Test_dets_and list.ejs')
+})
+
 
 
 // Set EJS as templating engine
