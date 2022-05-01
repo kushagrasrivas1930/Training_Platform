@@ -25,11 +25,12 @@
 		<div class="body-container">
 			<div class="login-container">
 				<p class="title">
+					<h1><%= test_title  %></h1> 
 					Add Question
 					<!-- Insert the current question number using JS  -->
-					<p class="title"> Question 1</p>
+					<p class="title"> Question <%= totalQuestion %> </p>
 				</p>
-				<form action="/AddQues" method="post">
+				<form action="/addQues" method="post">
 					<div class="topic_select">
 						<label for="topic_section">Choose a Topic </label>
 						<select name="topic_section_dropdown" id="topic_section_dropdown">
@@ -50,26 +51,26 @@
 					<div>
 						<input
 							type="text"
-							name="option_details"
+							name="option_details_A"
 							id="option_details_A"
 							placeholder="Enter Option A"
 						/>
 
 						<input
 							type="text"
-							name="option_details"
+							name="option_details_B"
 							id="option_details_B"
 							placeholder="Enter Option B"
 						/>
 						<input
 							type="text"
-							name="option_details"
+							name="option_details_C"
 							id="option_details_C"
 							placeholder="Enter Option C"
 						/>
 						<input
 							type="text"
-							name="option_details"
+							name="option_details_D"
 							id="option_details_D"
 							placeholder="Enter Option D"
 						/>
@@ -125,7 +126,7 @@
 					</div>
 
 					<div class="button-container">
-						<button class="sub-button" type="submit">Add Next Question</button>
+						<button class="sub-button" type="submit" >Add Next Question</button>
 
 						<button class="sub-button-2" type="submit">Publish Test</button>
 					</div>
