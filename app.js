@@ -20,49 +20,13 @@ app.listen(3000, () => {
     console.log("Application started on port 3000")
 })
 
-
 app.use(express.static(__dirname))
 
 app.set('view engine', 'ejs')
 
 app.get("/", (req, res) => {
-    res.render('pages/login.ejs', {login:  "LOGIN"});
+    res.sendFile(__dirname + '/login.html')
 })
-
-app.get("/FacultyLogin", (req, res) => {
-    res.render('pages/FacultyLogin.ejs', {faculty: "FACULTY LOGIN"})
-})
-app.get("/FacultySignup", (req, res) => {
-    res.render('pages/FacultySignup.ejs')
-})
-
-app.get("/StudentSignup", (req, res) => {
-    res.render('pages/StudentSignup.ejs')
-})
-
-app.get("/AddTest", (req, res) => {
-    res.render('pages/AddTest.ejs')
-})
-
-app.get("/AddQues", (req, res) => {
-    res.render('pages/AddQues.ejs')
-})
-
-app.get("/AddQues1", (req, res) => {
-    res.render('AddQues.ejs')
-})
-
-app.get("/TestDetails_Information", (req, res) => {
-    res.render('pages/Test_dets_and list.ejs')
-})
-
-
-
-// Set EJS as templating engine
-app.set('view engine', 'ejs');
-
-
-
 
 const DB_HOST = process.env.DB_HOST
 const DB_USER = process.env.DB_USER
@@ -79,10 +43,10 @@ const db = mysql.createPool({
     port: DB_PORT
 })
 
-// db.getConnection((err, connection) => {
-//     if (err) throw (err)
-//     console.log("DB Connected Successfully: " + connection.threadID)
-// })
+db.getConnection((err, connection) => {
+    if (err) throw (err)
+    console.log("DB Connected Successfully: " + connection.threadID)
+})
 
 app.post('/signup', function (req, res) {
     var name = req.body.fn + " " + req.body.ln;
@@ -95,7 +59,7 @@ app.post('/signup', function (req, res) {
         db.query('insert into student_details (RegistrationNo, Password, Name, Email, ContactNo) values (?, ?, ?, ?, ?)',
             [regNo, password, name, cEmail, phoneNo], function (err, result) {
                 if (err) console.log(err);
-                console.log('successfully added contents to the db');
+                console.log('succefully added contents to the db');
             })
         res.redirect('/login.html');
     }
@@ -153,7 +117,7 @@ app.post('/faculty-signup', function (req, res) {
         db.query('insert into faculty_details (EmpID, Name, Email, ContactNo, Dept, Password) values (?, ?, ?, ?, ?, ?)',
             [empID, name, cEmail, phoneNo, dept, password], function (err, result) {
                 if (err) console.log(err);
-                console.log('successfully added contents to the db');
+                console.log('succefully added contents to the db');
             })
         res.redirect('/FacultyLogin.html');
     }
