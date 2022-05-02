@@ -48,6 +48,27 @@ db.getConnection((err, connection) => {
     console.log("DB Connected Successfully: " + connection.threadID)
 })
 
+
+app.get("/FacultyLogin", (req, res) => {
+    res.render('pages/FacultyLogin.ejs',)
+})
+app.get("/FacultySignup", (req, res) => {
+    res.render('pages/FacultySignup.ejs')
+})
+
+app.get("/StudentSignup", (req, res) => {
+    res.render('pages/StudentSignup.ejs')
+})
+
+app.get("/AddTest", (req, res) => {
+    res.render('pages/AddTest.ejs')
+})
+
+app.get("/AddQues", (req, res) => {
+    res.render('pages/AddQues.ejs')
+})
+
+
 app.post('/signup', function (req, res) {
     var name = req.body.fn + " " + req.body.ln;
     var regNo = req.body.rn;
