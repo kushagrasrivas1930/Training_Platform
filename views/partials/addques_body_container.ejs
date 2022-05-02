@@ -1,9 +1,13 @@
 <div class="body-container">
     <div class="login-container">
         <p class="title">
-            Add Question
-            <!-- Insert the current question number using JS  -->
-            <p class="title"> Question 1</p>
+        <h1>
+            <%= test_title %>
+        </h1>
+        Add Question
+        <!-- Insert the current question number using JS  -->
+        <p class="title"> Question <%= totalQuestion %>
+        </p>
         </p>
         <form action="/AddQues" method="post">
             <div class="topic_select">
@@ -15,86 +19,37 @@
                 </select>
             </div>
 
-            <textarea
-                name="Question_Des"
-                type="text"
-                placeholder="Enter Question Description *"
-                cols="90"
-                rows="8"
-            ></textarea>
+            <textarea name="Question_Des" type="text" placeholder="Enter Question Description *" cols="90"
+                rows="8"></textarea>
 
             <div>
-                <input
-                    type="text"
-                    name="option_details"
-                    id="option_details_A"
-                    placeholder="Enter Option A"
-                />
+                <input type="text" name="option_details_A" id="option_details_A" placeholder="Enter Option A" />
 
-                <input
-                    type="text"
-                    name="option_details"
-                    id="option_details_B"
-                    placeholder="Enter Option B"
-                />
-                <input
-                    type="text"
-                    name="option_details"
-                    id="option_details_C"
-                    placeholder="Enter Option C"
-                />
-                <input
-                    type="text"
-                    name="option_details"
-                    id="option_details_D"
-                    placeholder="Enter Option D"
-                />
+                <input type="text" name="option_details_B" id="option_details_B" placeholder="Enter Option B" />
+                <input type="text" name="option_details_C" id="option_details_C" placeholder="Enter Option C" />
+                <input type="text" name="option_details_D" id="option_details_D" placeholder="Enter Option D" />
             </div>
 
             <div>
                 <p>Please select the correct option</p>
                 <div class="radio_container">
                     <div class="radio_item">
-                        <input
-                            type="radio"
-                            id="option_A"
-                            name="options"
-                            value="A"
-                            class="radio"
-                        />
+                        <input type="radio" id="option_A" name="options" value="A" class="radio" />
                           <label for="option_A" class="radio_label">A</label>
                     </div>
                        
                     <div class="radio_item">
-                        <input
-                            type="radio"
-                            id="option_B"
-                            name="options"
-                            value="B"
-                            class="radio"
-                        />
+                        <input type="radio" id="option_B" name="options" value="B" class="radio" />
                           <label for="option_B" class="radio_label">B</label>
                     </div>
 
                     <div class="radio_item">
-                        <input
-                            type="radio"
-                            id="option_C"
-                            name="options"
-                            value="C"
-                            class="radio"
-                        />
+                        <input type="radio" id="option_C" name="options" value="C" class="radio" />
                           <label for="option_C" class="radio_label">C</label>
                     </div>
                      
                     <div class="radio_item">
-                        <input
-                            type="radio"
-                            id="option_D"
-                            name="options"
-                            value="D"
-                            class="radio"
-                        />
+                        <input type="radio" id="option_D" name="options" value="D" class="radio" />
                           <label for="option_D" class="radio_label">D</label>
                     </div>
                 </div>

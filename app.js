@@ -22,10 +22,10 @@ app.listen(3000, () => {
 
 app.use(express.static(__dirname))
 
-app.set('view engine', 'ejs')
+app.set('views engine', 'ejs')
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + '/login.html')
+    res.render(__dirname + '/views/pages/login.ejs')
 })
 
 const DB_HOST = process.env.DB_HOST
@@ -61,11 +61,11 @@ app.post('/signup', function (req, res) {
                 if (err) console.log(err);
                 console.log('succefully added contents to the db');
             })
-        res.redirect('/login.html');
+        res.render(__dirname + '/views/pages/login.ejs');
     }
     else {
 
-        res.redirect('/signup.html')
+        res.render(__dirname + '/views/pages/signup.ejs')
     }
 
     // db.query('insert into student_details (RegistrationNo, Password, Name, Email, ContactNo) values',, )
@@ -79,11 +79,11 @@ app.post('/login', function (req, res) {
         console.log(result);
         if (result == 0) {
             console.log('No such user present TRY AGAIN');
-            res.redirect('/login.html');
+            res.render(__dirname + '/views/pages/login.ejs');
         }
         else {
             console.log("Successfully logged in !");
-            res.redirect('/login.html');
+            res.render(__dirname + '/views/pages/login.ejs');
         }
     })
 })
@@ -96,11 +96,11 @@ app.post('/faculty-login', function (req, res) {
         console.log(result);
         if (result == 0) {
             console.log('No such user present TRY AGAIN');
-            res.redirect('/FacultyLogin.html');
+            res.render(__dirname + '/views/pages/FacultyLogin.ejs');
         }
         else {
             console.log("Successfully logged in !");
-            res.redirect('/AddTest.html');
+            res.render(__dirname + '/views/pages/AddTest.ejs');
         }
     })
 })
@@ -119,11 +119,11 @@ app.post('/faculty-signup', function (req, res) {
                 if (err) console.log(err);
                 console.log('succefully added contents to the db');
             })
-        res.redirect('/FacultyLogin.html');
+        res.render(__dirname + '/views/pages/FacultyLogin.ejs');
     }
     else {
 
-        res.redirect('/FacultySignup.html')
+        res.render(__dirname + '/views/pages/FacultySignup.ejs')
     }
 })
 
@@ -136,12 +136,12 @@ app.post('/createTest', function (req, res) {
                 if (err) console.log(err);
                 console.log("Test Created successfully");
                 aQuesID = tQuesID = eQuesID = 1;
-                res.render(__dirname + '/AddQues.ejs', { test_title: testTitle, totalQuestion: totalQuestion });
+                res.render(__dirname + '/views/pages/AddQues.ejs', { test_title: testTitle, totalQuestion: totalQuestion });
             })
         }
         else {
             console.log('Enter a unique TestID');
-            res.redirect('/AddTest.html');
+            res.render(__dirname + '/views/pages/AddTest.ejs');
         }
     })
 
@@ -178,6 +178,6 @@ app.post('/addQues', function (req, res) {
             console.log('Question Added successfully');
         })
     totalQuestion++;
-    res.render(__dirname + '/AddQues.ejs', { test_title: testTitle, totalQuestion: totalQuestion });
+    res.render(__dirname + '/views/pages/AddQues.ejs', { test_title: testTitle, totalQuestion: totalQuestion });
     
 })
