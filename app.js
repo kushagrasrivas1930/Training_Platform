@@ -65,7 +65,7 @@ app.get("/AddTest", (req, res) => {
 })
 
 app.get("/AddQues", (req, res) => {
-    res.render('pages/AddQues.ejs')
+    res.render('pages/AddQues.ejs', { totalQuestion: 12, test_title: "Current Test Title(Sample Parameter) " } )
 })
 
 app.get("/Testlist_student", (req, res) => {

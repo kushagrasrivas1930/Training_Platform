@@ -1,9 +1,9 @@
 <div class="body-container">
     <div class="login-container">
         <p class="title">
-        <h1>
+        <h2>
             <%= test_title %>
-        </h1>
+        </h2>
         Add Question
         <!-- Insert the current question number using JS  -->
         <p class="title"> Question <%= totalQuestion %>
@@ -57,9 +57,13 @@
 
             <div class="button-container">
                 <button class="sub-button" type="submit">Add Next Question</button>
-
-                <button class="sub-button-2" type="submit">Publish Test</button>
+                
+                
             </div>
+        </form>
+
+        <form action="/FacultyTestList" method="GET">
+            <button class="sub-button-2" type="submit">Publish Test</button>
         </form>
     </div>
 </div>
