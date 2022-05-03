@@ -43,10 +43,10 @@ const db = mysql.createPool({
     port: DB_PORT
 })
 
-db.getConnection((err, connection) => {
-    if (err) throw (err)
-    console.log("DB Connected Successfully: " + connection.threadID)
-})
+// db.getConnection((err, connection) => {
+//     if (err) throw (err)
+//     console.log("DB Connected Successfully: " + connection.threadID)
+// })
 
 
 app.get("/FacultyLogin", (req, res) => {
@@ -67,6 +67,22 @@ app.get("/AddTest", (req, res) => {
 app.get("/AddQues", (req, res) => {
     res.render('pages/AddQues.ejs')
 })
+
+app.get("/Testlist_student", (req, res) => {
+    res.render('pages/testlist_student.ejs', {duration: 0 , apti:0, tech: 0, eng:0})
+})
+
+
+app.get("/TestDetails_student", (req, res) => {
+    res.render('pages/Test_dets.ejs', {duration: 0 , apti:0, tech: 0, eng:0})
+})
+
+app.get("/FacultyTestList", (req, res) => {
+    res.render('pages/FacultyTestList.ejs', {testname: "Sample Test Name"})
+})
+
+
+
 
 
 app.post('/signup', function (req, res) {

@@ -10,8 +10,15 @@
 	<body>
 		<!-- This is the header nav bar -->
 		<%- include('../partials/header'); %>
-		<div class="login-container">
-			<p class="title">Tests List</p>
+		<div class="test_list_container">
+			<div>
+				<!-- <p class="title">Tests List</p> -->
+
+				<!-- loop over this component -->
+				<div style="margin-bottom: 2em">
+					<%- include('../partials/FacultyTest_component'); %>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

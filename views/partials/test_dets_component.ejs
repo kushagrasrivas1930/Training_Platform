@@ -1,0 +1,55 @@
+<div
+	class="test_container"
+	style="
+		background-color: #e9f8ff;
+		padding: 3em;
+		border-radius: 25px;
+		width: 70em;
+
+		box-shadow: 0 0px 2px rgba(6, 38, 59, 0.158), 0 2px 4px rgba(0, 0, 0, 0.07),
+			0 4px 8px rgba(0, 87, 145, 0.247), 0 8px 16px rgba(137, 255, 173, 0.205),
+			0 16px 32px rgba(0, 87, 145, 0.082), 0 32px 64px rgba(0, 87, 145, 0.144);
+	"
+>
+	<h3 class="test_title">Dell Prep Test 1</h3>
+	<p class="test_title-p">Test Details</p>
+
+	<ul style="display: grid">
+		<p style="grid-column-start: 1" class="test_title-p2">Test Duration</p>
+		<ul style="grid-column-start: 4">
+			<%= duration%> hours
+		</ul>
+	</ul>
+	<p class="test_title-p2">Section Breakdown</p>
+	<ul style="display: grid">
+		<p>Aptitude</p>
+		<ul style="grid-column-start: 4">
+			<%= apti%> Questions
+		</ul>
+	</ul>
+	<ul style="display: grid">
+		<p>Technical</p>
+		<ul style="grid-column-start: 4">
+			<%= tech%> Questions
+		</ul>
+	</ul>
+	<ul style="display: grid">
+		<p>English</p>
+		<ul style="grid-column-start: 4">
+			<%= eng%> Questions
+		</ul>
+	</ul>
+
+	<div class="rules" id="rules">
+		<p class="test_title-p">RULES</p>
+		<ul>
+			<li>You cannot switch tabs after starting/initiating the test</li>
+		</ul>
+
+		<ul>
+			<li>You can only answer a question only once</li>
+		</ul>
+	</div>
+
+	<button style="margin-top: 2em">Start Test</button>
+</div>
