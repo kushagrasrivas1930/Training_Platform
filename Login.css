@@ -177,6 +177,30 @@ input:hover {
 	-o-transition: 0.75s ease-in;
 }
 
+.radio_container {
+	margin-top: 1em;
+	margin-bottom: 1em;
+	display: flex;
+	flex-direction: column;
+}
+
+.radio_item {
+	margin: 2em;
+}
+
+div > .radio {
+	height: 1em;
+	line-height: 1em;
+	margin: 0.5em;
+	width: 1em;
+	cursor: pointer;
+}
+
+.radio_label {
+	margin: 0.5em;
+	cursor: pointer;
+}
+
 .button-container {
 	margin-top: 0.5em;
 	display: flex;

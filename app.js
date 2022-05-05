@@ -36,11 +36,14 @@ app.get("/", (req, res) => {
     res.render(__dirname + '/views/pages/login.ejs')
 })
 
+
 const DB_HOST = process.env.DB_HOST
 const DB_USER = process.env.DB_USER
 const DB_PASSWORD = process.env.DB_PASSWORD
 const DB_DATABASE = process.env.DB_DATABASE
 const DB_PORT = process.env.DB_PORT
+
+
 
 const db = mysql.createPool({
     connectionLimit: 100,
@@ -75,6 +78,16 @@ app.get("/AddTest", (req, res) => {
 app.get("/AddQues", (req, res) => {
     res.render('pages/AddQues.ejs', { totalQuestion: 12, test_title: "Current Test Title(Sample Parameter) " })
 })
+
+app.get("/TestQuesList", (req, res) => {
+    res.render('pages/Test_Question_List.ejs', { testname: 'testname', Ques: 'Which of the following sorting algorithms can be used to sort a random linked list with minimum time complexity?', QuesNo: 23 })
+})
+
+app.get("/TestMCQ", (req, res) => {
+    res.render('pages/MCQ_Test.ejs', { testname: 'testname', Ques: 'Which of the following sorting algorithms can be used to sort a random linked list with minimum time complexity?', OptionA: "OPTION 1", OptionB: "OPTION 2", OptionC: "OPTION 3", OptionD: "OPTION 4", QuesNo: 12 })
+})
+
+
 
 // app.get("/Testlist_student", (req, res) => {
 //     res.render('pages/testlist_student.ejs', { duration: 0, apti: 0, tech: 0, eng: 0 })
