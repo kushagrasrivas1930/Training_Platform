@@ -13,6 +13,14 @@ var testTitle;
 var testID;
 var questionID;
 var totalQuestion = 1;
+var json;
+var len;
+var string;
+var apti;
+var tech;
+var eng;
+var nA, nT, nE;
+
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -43,10 +51,10 @@ const db = mysql.createPool({
     port: DB_PORT
 })
 
-// db.getConnection((err, connection) => {
-//     if (err) throw (err)
-//     console.log("DB Connected Successfully: " + connection.threadID)
-// })
+db.getConnection((err, connection) => {
+    if (err) throw (err)
+    console.log("DB Connected Successfully: " + connection.threadID)
+})
 
 
 app.get("/FacultyLogin", (req, res) => {
@@ -65,22 +73,66 @@ app.get("/AddTest", (req, res) => {
 })
 
 app.get("/AddQues", (req, res) => {
-    res.render('pages/AddQues.ejs', { totalQuestion: 12, test_title: "Current Test Title(Sample Parameter) " } )
+    res.render('pages/AddQues.ejs', { totalQuestion: 12, test_title: "Current Test Title(Sample Parameter) " })
 })
 
-app.get("/Testlist_student", (req, res) => {
-    res.render('pages/testlist_student.ejs', {duration: 0 , apti:0, tech: 0, eng:0})
-})
+// app.get("/Testlist_student", (req, res) => {
+//     res.render('pages/testlist_student.ejs', { duration: 0, apti: 0, tech: 0, eng: 0 })
+// })
 
 
-app.get("/TestDetails_student", (req, res) => {
-    res.render('pages/Test_dets.ejs', {duration: 0 , apti:0, tech: 0, eng:0})
+app.post("/TestDetails_student", (req, res) => {
+
+    var testname = req.body.testname;
+    var test_id;
+    let p = new Promise((resolve, reject) => {
+        // console.log(testname);
+        db.query("select TestID from test_details where TestTitle = ?", testname, function (err, result) {
+            string = JSON.stringify(result);
+            // console.log(string);
+            json = JSON.parse(string);
+            // console.log(json);
+            test_id = json[0].TestID;
+            // console.log(test_id);
+            resolve(test_id);
+        });
+        // console.log(test_id);
+
+    })
+    p.then((message) => {
+        // console.log(message);
+        db.query("select count(if(SectionID = 'A', 1, null)) as cA, count(if(SectionID = 'T', 1, null)) as cT, count(if(SectionID = 'E', 1, null)) as cE from question_bank where TestID = ?", message, function (err, result) {
+            if (err) console.log(err);
+            else {
+                var st = JSON.stringify(result);
+                var js = JSON.parse(st);
+                nA = js[0].cA;
+                nT = js[0].cT;
+                nE = js[0].cE;
+                console.log(nA + " " + nT + " " + nE);
+                res.render('pages/Test_dets.ejs', { testname: testname, duration: 2, apti: nA, tech: nT, eng: nE })
+
+            }
+        });
+    })
+
+    // console.log(nA + " " + nT + " " + nE);
 })
 
 app.get("/FacultyTestList", (req, res) => {
-    res.render('pages/FacultyTestList.ejs', {testname: "Sample Test Name"})
+    db.query("select TestTitle from test_details", function (err, result) {
+        string = JSON.stringify(result);
+        // console.log('>> string: ', string);
+        json = JSON.parse(string);
+        // console.log('>> json : ', json);
+    })
+    res.render(__dirname + '/views/pages/FacultyTestList.ejs', { test_name: json });
+
 })
 
+app.get("/directToCreateTest", (req, res) => {
+    res.render("pages/AddTest.ejs")
+})
 
 
 
@@ -109,6 +161,12 @@ app.post('/signup', function (req, res) {
 })
 
 app.post('/login', function (req, res) {
+    db.query("select TestTitle from test_details", function (err, result) {
+        string = JSON.stringify(result);
+        // console.log('>> string: ', string);
+        json = JSON.parse(string);
+        console.log('>> json : ', json);
+    })
     var username = req.body.Username;
     var password = req.body.Password;
     console.log(username + ' ' + password);
@@ -120,12 +178,18 @@ app.post('/login', function (req, res) {
         }
         else {
             console.log("Successfully logged in !");
-            res.render(__dirname + '/views/pages/login.ejs');
+            res.render(__dirname + '/views/pages/testlist_student.ejs', { test_name: json });
         }
     })
 })
 
 app.post('/faculty-login', function (req, res) {
+    db.query("select TestTitle from test_details", function (err, result) {
+        string = JSON.stringify(result);
+        // console.log('>> string: ', string);
+        json = JSON.parse(string);
+        console.log('>> json : ', json);
+    })
     var username = req.body.Username;
     var password = req.body.Password;
     console.log(username + ' ' + password);
@@ -137,8 +201,11 @@ app.post('/faculty-login', function (req, res) {
         }
         else {
             console.log("Successfully logged in !");
-            res.render(__dirname + '/views/pages/AddTest.ejs');
+
+
+            res.render(__dirname + '/views/pages/FacultyTestList.ejs', { test_name: json });
         }
+
     })
 })
 
@@ -216,5 +283,54 @@ app.post('/addQues', function (req, res) {
         })
     totalQuestion++;
     res.render(__dirname + '/views/pages/AddQues.ejs', { test_title: testTitle, totalQuestion: totalQuestion });
+
+})
+
+app.post('/add_FacultyTestList', function (req, res) {
+    let p = new Promise ((resolve, reject) =>{
+        db.query("select TestTitle from test_details", function (err, result) {
+            string = JSON.stringify(result);
+            // console.log('>> string: ', string);
+            json = JSON.parse(string);
+            // console.log('>> json : ', json);
+            resolve(json)
+        });
+    });
+    p.then((message) => {
+        res.render(__dirname + '/views/pages/FacultyTestList.ejs', { test_name: json });
+    })
     
+    // var section = req.body.topic_section_dropdown;
+    // console.log(section);
+    // var question = req.body.Question_Des;
+    // var oA = req.body.option_details_A;
+    // var oB = req.body.option_details_B;
+    // var oC = req.body.option_details_C;
+    // var oD = req.body.option_details_D;
+    // var corrOption = req.body.options;
+    // var sectionID;
+    // if (section == 'Aptitude') {
+    //     sectionID = 'A';
+    //     questionID = aQuesID;
+    //     aQuesID++;
+    // }
+    // if (section == 'Technical') {
+    //     sectionID = 'T';
+    //     questionID = tQuesID;
+    //     tQuesID++;
+    // }
+    // if (section == 'English') {
+    //     sectionID = 'E';
+    //     questionID = eQuesID;
+    //     eQuesID++;
+    // }
+    // db.query('insert into question_bank (TestID, SectionID, QuestionID, Question, OptionA, OptionB, OptionC, OptionD, Correct) values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    //     [testID, sectionID, questionID, question, oA, oB, oC, oD, corrOption], function (err, result) {
+    //         if (err) console.log(err);
+    //         console.log('Question Added successfully');
+    //     })
+    // totalQuestion++;
+
+    
+
 })

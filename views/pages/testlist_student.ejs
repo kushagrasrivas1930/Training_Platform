@@ -12,11 +12,13 @@
 		<%- include('../partials/header'); %>
 		<div class="test_list_container">
 			<div>
-				<!-- <p class="title">Tests List</p> -->
+				<p class="title">Tests List</p>
 
 				<!-- loop over this component -->
 				<div style="margin-bottom: 2em">
-					<%- include('../partials/test_name_gotodets'); %>
+					<% test_name.forEach(element=> { %>
+					<%- include('../partials/test_name_gotodets', {testname: element.TestTitle}); %>
+					<% }); %>
 				</div>
 			</div>
 		</div>
