@@ -11,6 +11,7 @@ require("dotenv").config()
 
 var testTitle;
 var testID;
+var duration;
 var questionID;
 var totalQuestion = 1;
 var json;
@@ -57,6 +58,41 @@ db.getConnection((err, connection) => {
 })
 
 
+app.post("/TestQuesList", (req, res) => {
+    var tname = req.body.preview;
+    res.render('pages/Test_Question_List.ejs', { testname: tname , Ques: 'Which of the following sorting algorithms can be used to sort a random linked list with minimum time complexity?', QuesNo: 23 })
+})
+
+app.post("/TestMCQ", (req, res) => {
+    var testname = req.body.testname;
+    var s, j;
+    var tID;
+    var qD, opA, opB, str, jss;
+    let p = new Promise ((resolve, reject) => {
+        db.query("select TestID from test_details where TestTitle = ?", testname, function(err, result) {
+            // console.log(result);
+            s = JSON.stringify(result);
+            j = JSON.parse(s);
+            // console.log(j);
+            tID = j[0].TestID;
+            resolve(tID);
+        })
+    })
+    p.then((message) => {
+        db.query("select Question, OptionA, OptionB, OptionC, OptionD from question_bank where TestID = ?", message, function(err, result) {
+            // console.log(result);
+            str = JSON.stringify(result);
+            jss = JSON.parse(str);
+            console.log(jss);
+            res.render('pages/MCQ_Test.ejs', { testname: testname, message: jss})
+        })
+    })
+    
+    
+})
+
+
+
 app.get("/FacultyLogin", (req, res) => {
     res.render('pages/FacultyLogin.ejs',)
 })
@@ -85,14 +121,17 @@ app.post("/TestDetails_student", (req, res) => {
 
     var testname = req.body.testname;
     var test_id;
+    var dur;
     let p = new Promise((resolve, reject) => {
         // console.log(testname);
-        db.query("select TestID from test_details where TestTitle = ?", testname, function (err, result) {
+        db.query("select TestID, Duration from test_details where TestTitle = ?", testname, function (err, result) {
             string = JSON.stringify(result);
             // console.log(string);
             json = JSON.parse(string);
             // console.log(json);
             test_id = json[0].TestID;
+            dur = json[0].Duration;
+            // console.log(dur);
             // console.log(test_id);
             resolve(test_id);
         });
@@ -110,7 +149,7 @@ app.post("/TestDetails_student", (req, res) => {
                 nT = js[0].cT;
                 nE = js[0].cE;
                 console.log(nA + " " + nT + " " + nE);
-                res.render('pages/Test_dets.ejs', { testname: testname, duration: 2, apti: nA, tech: nT, eng: nE })
+                res.render('pages/Test_dets.ejs', { testname: testname, duration: dur, apti: nA, tech: nT, eng: nE })
 
             }
         });
@@ -120,13 +159,19 @@ app.post("/TestDetails_student", (req, res) => {
 })
 
 app.get("/FacultyTestList", (req, res) => {
-    db.query("select TestTitle from test_details", function (err, result) {
-        string = JSON.stringify(result);
-        // console.log('>> string: ', string);
-        json = JSON.parse(string);
-        // console.log('>> json : ', json);
+    let p = new Promise ((resolve, reject) => {
+        db.query("select TestTitle from test_details", function (err, result) {
+            string = JSON.stringify(result);
+            // console.log('>> string: ', string);
+            json = JSON.parse(string);
+            // console.log('>> json : ', json);
+            resolve(json);
+        });
     })
-    res.render(__dirname + '/views/pages/FacultyTestList.ejs', { test_name: json });
+    p.then((message) => {
+        res.render(__dirname + '/views/pages/FacultyTestList.ejs', { test_name: message });
+    })
+    
 
 })
 
@@ -165,7 +210,7 @@ app.post('/login', function (req, res) {
         string = JSON.stringify(result);
         // console.log('>> string: ', string);
         json = JSON.parse(string);
-        console.log('>> json : ', json);
+        // console.log('>> json : ', json);
     })
     var username = req.body.Username;
     var password = req.body.Password;
@@ -234,12 +279,14 @@ app.post('/faculty-signup', function (req, res) {
 app.post('/createTest', function (req, res) {
     testTitle = req.body.testTitle;
     testID = req.body.testID;
+    duration = req.body.test_duration;
     db.query('select TestId from test_details where TestID = ?', testID, function (err, result) {
         if (result == 0) {
-            db.query('insert into test_details (TestID, TestTitle) values (?, ?)', [testID, testTitle], function (err, result) {
+            db.query('insert into test_details (TestID, TestTitle, Duration) values (?, ?, ?)', [testID, testTitle, duration], function (err, result) {
                 if (err) console.log(err);
                 console.log("Test Created successfully");
                 aQuesID = tQuesID = eQuesID = 1;
+                totalQuestion = 1;
                 res.render(__dirname + '/views/pages/AddQues.ejs', { test_title: testTitle, totalQuestion: totalQuestion });
             })
         }

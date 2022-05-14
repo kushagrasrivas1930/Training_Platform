@@ -17,7 +17,7 @@
 	<ul style="display: grid">
 		<p style="grid-column-start: 1" class="test_title-p2">Test Duration</p>
 		<ul style="grid-column-start: 4">
-			<%= duration%> hours
+			<%= duration%> minutes
 		</ul>
 	</ul>
 	<p class="test_title-p2">Section Breakdown</p>
@@ -50,6 +50,8 @@
 			<li>You can only answer a question only once</li>
 		</ul>
 	</div>
-
-	<button style="margin-top: 2em">Start Test</button>
+	<form action="/TestMCQ" method="post">
+		<button style="margin-top: 2em" name="testname" value="<%= testname %>">Start Test</button>
+	</form>
+	
 </div>

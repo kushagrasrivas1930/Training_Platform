@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Test Details</title>
+		<link rel="stylesheet" href="../Login.css" />
+	</head>
+
+	<body>
+		<!-- This is the header nav bar -->
+		<%- include('../partials/header'); %>
+		<div class="test_list_container">
+			<div>
+				<p class="title"><%= testname %></p>
+
+				<div
+					class="test_container"
+					style="
+						background-color: #e9f8ff;
+						padding: 3em;
+						border-radius: 25px;
+						width: 70em;
+						margin-bottom: 1em;
+
+						box-shadow: 0 0px 2px rgba(6, 38, 59, 0.158),
+							0 2px 4px rgba(0, 0, 0, 0.07), 0 4px 8px rgba(0, 87, 145, 0.247),
+							0 8px 16px rgba(137, 255, 173, 0.205),
+							0 16px 32px rgba(0, 87, 145, 0.082),
+							0 32px 64px rgba(0, 87, 145, 0.144);
+					"
+				>
+					<!-- for loop lagega idhar -->
+					<% message.forEach((element, i) => { %>
+						
+						<form action="/QuestionSubmit" method="POST" style="margin-bottom: 2em;">
+							<h3 class="test_title-p2"><h3 class="test_title-p">Question <%= i+1%> </h3> <h3 style="font-weight: bold"><%- element.Question %></h2></h3>
+	
+							<div class="radio_container">
+								<div class=".radio_item">
+									<input
+										type="radio"
+										class="radio"
+										name="Options"
+										id="Option1"
+										value="A"
+									/>
+									<label for="Option1" class="radio_label"><%- element.OptionA %> </label>
+								</div>
+	
+								<div>
+									<input
+										type="radio"
+										class="radio"
+										name="Options"
+										id="Option2"
+										value="B"
+									/>
+									<label for="Option2" class="radio_label"><%- element.OptionB %> </label>
+								</div>
+	
+								<div>
+									<input
+										type="radio"
+										class="radio"
+										name="Options"
+										id="Option3"
+										value="C"
+									/>
+									<label for="Option3" class="radio_label"><%- element.OptionC %> </label>
+								</div>
+	
+								<div>
+									<input
+										type="radio"
+										class="radio"
+										name="Options"
+										id="Option4"
+										value="D"
+									/>
+									<label for="Option4" class="radio_label"><%- element.OptionD %> </label>
+								</div>
+	
+								
+							</div>
+						</form>
+						
+					<% }); %>
+					<div style="margin-top: 2em">
+						<button>Submit</button>
+					</div>
+					
+					<!-- bhai isme naya form action create karna padega tumhe aur phir ek do cheezein aur hain -->
+					<!-- yahaan tak rahega form -->
+				</div>
+			</div>
+		</div>
+		<script>
+			console.log(test_name);
+			console.log("bakaiti");
+		</script>
+	</body>
+</html>
