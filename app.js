@@ -157,6 +157,7 @@ app.post("/TestDetails_student", (req, res) => {
 
     // console.log(nA + " " + nT + " " + nE);
 })
+// something is wrong
 
 app.get("/FacultyTestList", (req, res) => {
     let p = new Promise ((resolve, reject) => {
