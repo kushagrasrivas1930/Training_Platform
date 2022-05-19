@@ -6,9 +6,12 @@ const algorithm = 'aes-256-cbc'; //Using AES encryption
 const key = crypto.randomBytes(32);
 const iv = crypto.randomBytes(16);
 const ejs = require('ejs');
+const cors = require('cors');
+const { resolve } = require('path');
 
 require("dotenv").config()
 
+var username;
 var testTitle;
 var testID;
 var duration;
@@ -23,6 +26,7 @@ var eng;
 var nA, nT, nE;
 
 
+
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }));
 app.listen(3000, () => {
@@ -32,6 +36,10 @@ app.listen(3000, () => {
 app.use(express.static(__dirname))
 
 app.set('views engine', 'ejs')
+app.use(express.json({
+    type: ['application/json', 'text/plain']
+}))
+app.use(cors())
 
 app.get("/", (req, res) => {
     res.render(__dirname + '/views/pages/login.ejs')
@@ -63,7 +71,28 @@ db.getConnection((err, connection) => {
 
 app.post("/TestQuesList", (req, res) => {
     var tname = req.body.preview;
-    res.render('pages/Test_Question_List.ejs', { testname: tname , Ques: 'Which of the following sorting algorithms can be used to sort a random linked list with minimum time complexity?', QuesNo: 23 })
+
+    let p = new Promise((resolve, reject) => {
+        var ss, jso, sst, jsoN;
+        db.query("Select TestID from test_details where TestTitle = ?", tname, function (err, result) {
+            ss = JSON.stringify(result);
+            jso = JSON.parse(ss);
+            var tt = jso[0].testID;
+            console.log(tt);
+            db.query("select Question from question_bank where TestID = ?", message, function (err, result) {
+                sst = JSON.stringify(result);
+                jsoN = JSON.parse(ss);
+                console.log(jsoN);
+    
+            })
+            resolve(jsoN);
+        })
+    })
+    p.then((message) => {
+        console.log(message);
+        res.render('pages/Test_Question_List.ejs', { testname: tname, message: message })
+
+    })
 })
 
 app.post("/TestMCQ", (req, res) => {
@@ -71,8 +100,8 @@ app.post("/TestMCQ", (req, res) => {
     var s, j;
     var tID;
     var qD, opA, opB, str, jss;
-    let p = new Promise ((resolve, reject) => {
-        db.query("select TestID from test_details where TestTitle = ?", testname, function(err, result) {
+    let p = new Promise((resolve, reject) => {
+        db.query("select TestID from test_details where TestTitle = ?", testname, function (err, result) {
             // console.log(result);
             s = JSON.stringify(result);
             j = JSON.parse(s);
@@ -82,16 +111,16 @@ app.post("/TestMCQ", (req, res) => {
         })
     })
     p.then((message) => {
-        db.query("select Question, OptionA, OptionB, OptionC, OptionD from question_bank where TestID = ?", message, function(err, result) {
+        db.query("select Question, OptionA, OptionB, OptionC, OptionD from question_bank where TestID = ?", message, function (err, result) {
             // console.log(result);
             str = JSON.stringify(result);
             jss = JSON.parse(str);
             console.log(jss);
-            res.render('pages/MCQ_Test.ejs', { testname: testname, message: jss})
+            res.render('pages/MCQ_Test.ejs', { testname: testname, message: jss })
         })
     })
-    
-    
+
+
 })
 
 
@@ -124,6 +153,67 @@ app.get("/TestMCQ", (req, res) => {
 })
 
 
+app.post("/QuestionSubmit", (req, res) => {
+    // var eval = req.body;
+    res.render(__dirname + "/views/pages/login.ejs");
+    var sA = 0, sT = 0, sE = 0, total = 0;
+    var jjjj, ssss;
+    var eval = req.body;
+    var tid;
+    let p = new Promise((resolve, reject) => {
+        db.query("select TestID from test_details where TestTitle = ?", eval[0], function (err, result) {
+            var s = JSON.stringify(result);
+            var j = JSON.parse(s);
+            tid = j[0].TestID;
+            console.log(j[0].TestID);
+            db.query("select SectionID, Correct from question_bank where TestID = ?", j[0].TestID, function (err, result) {
+                ssss = JSON.stringify(result);
+                console.log(ssss);
+                jjjj = JSON.parse(ssss);
+                console.log(jjjj);
+                console.log(jjjj[0].SectionID);
+                for (var i = 0; i < jjjj.length; i++) {
+                    if (jjjj[i].SectionID === "A") {
+                        if (eval[i + 1] === jjjj[i].Correct) {
+                            sA++;
+                        }
+                    }
+                    else if (jjjj[i].SectionID === "T") {
+                        if (eval[i + 1] === jjjj[i].Correct) {
+                            sT++;
+                        }
+                    }
+                    else if (jjjj[i].SectionID === "E") {
+                        if (eval[i + 1] === jjjj[i].Correct) {
+                            sE++;
+                        }
+                    }
+                }
+                total = sA + sT + sE;
+                console.log(sA + " " + sT + " " + sE + " " + total);
+                resolve(total);
+            })
+
+        })
+    })
+
+    p.then((message) => {
+        console.log(message);
+        db.query("insert into score_details (RegistrationNo, TestID, Aptitude, Technical, English, Total) values(?, ?, ?, ?, ?, ?)", [username, tid, sA, sT, sE, message], function (err, result) {
+            console.log(sA + " " + sT + " " + sE);
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log("Successful entry");
+            }
+            console.log("what up");
+            
+
+        })
+    })
+
+})
 
 // app.get("/Testlist_student", (req, res) => {
 //     res.render('pages/testlist_student.ejs', { duration: 0, apti: 0, tech: 0, eng: 0 })
@@ -161,7 +251,7 @@ app.post("/TestDetails_student", (req, res) => {
                 nA = js[0].cA;
                 nT = js[0].cT;
                 nE = js[0].cE;
-                console.log(nA + " " + nT + " " + nE);
+                // console.log(nA + " " + nT + " " + nE);
                 res.render('pages/Test_dets.ejs', { testname: testname, duration: dur, apti: nA, tech: nT, eng: nE })
 
             }
@@ -173,7 +263,7 @@ app.post("/TestDetails_student", (req, res) => {
 // something is wrong
 
 app.get("/FacultyTestList", (req, res) => {
-    let p = new Promise ((resolve, reject) => {
+    let p = new Promise((resolve, reject) => {
         db.query("select TestTitle from test_details", function (err, result) {
             string = JSON.stringify(result);
             // console.log('>> string: ', string);
@@ -185,7 +275,7 @@ app.get("/FacultyTestList", (req, res) => {
     p.then((message) => {
         res.render(__dirname + '/views/pages/FacultyTestList.ejs', { test_name: message });
     })
-    
+
 
 })
 
@@ -226,7 +316,7 @@ app.post('/login', function (req, res) {
         json = JSON.parse(string);
         // console.log('>> json : ', json);
     })
-    var username = req.body.Username;
+    username = req.body.Username;
     var password = req.body.Password;
     console.log(username + ' ' + password);
     db.query("select * from student_details where RegistrationNo = ? and Password = ?", [username, password], function (err, result) {
@@ -348,7 +438,7 @@ app.post('/addQues', function (req, res) {
 })
 
 app.post('/add_FacultyTestList', function (req, res) {
-    let p = new Promise ((resolve, reject) =>{
+    let p = new Promise((resolve, reject) => {
         db.query("select TestTitle from test_details", function (err, result) {
             string = JSON.stringify(result);
             // console.log('>> string: ', string);
@@ -360,7 +450,7 @@ app.post('/add_FacultyTestList', function (req, res) {
     p.then((message) => {
         res.render(__dirname + '/views/pages/FacultyTestList.ejs', { test_name: json });
     })
-    
+
     // var section = req.body.topic_section_dropdown;
     // console.log(section);
     // var question = req.body.Question_Des;
@@ -392,6 +482,6 @@ app.post('/add_FacultyTestList', function (req, res) {
     //     })
     // totalQuestion++;
 
-    
+
 
 })

@@ -16,7 +16,8 @@
 				<p class="title"><%= testname %></p>
 
 				<!-- Yeh neeche wala component ko loop karna padega -->
-				<div
+				<% message.forEach((element, i) => { %>
+					<div
 					class="test_container"
 					style="
 						background-color: #e9f8ff;
@@ -32,9 +33,11 @@
 							0 32px 64px rgba(0, 87, 145, 0.144);
 					"
 				>
-					<h3 class="test_title-p">Question <%= QuesNo%></h3>
-					<h3 class="test_title-p2"><%= Ques%></h3>
+					<h3 class="test_title-p">Question <%= i+1%></h3>
+					<h3 class="test_title-p2"><%- element.Question%></h3>
 				</div>
+				<% }); %>
+				
 
 				<!-- Yeh wala bhai tumhe change karna padega according to the action -->
 				<form action="/FacultyTestList" method="get">
