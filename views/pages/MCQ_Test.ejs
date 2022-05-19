@@ -113,8 +113,10 @@
 										headers: { 'Content-Type': 'application/json' },
 										body: JSON.stringify(arr)
 									}).then(res => {
+										// res.render('/views/pages/login.ejs')
 										console.log("Request complete! response:", res);
 									});
+									
 									console.log(arr)
 									// event.preventDefault()
 								}

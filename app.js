@@ -71,26 +71,29 @@ db.getConnection((err, connection) => {
 
 app.post("/TestQuesList", (req, res) => {
     var tname = req.body.preview;
+    var ss, jso, sst, jsoN;
     console.log(tname);
     let p = new Promise((resolve, reject) => {
-        var ss, jso, sst, jsoN;
+        
         db.query("Select TestID from test_details where TestTitle = ?", tname, function (err, result) {
             ss = JSON.stringify(result);
+            console.log(ss);
             jso = JSON.parse(ss);
+            // console.log(jso[0].TestID);
             
-            var tt = jso[0].testID;
-            db.query("select Question from question_bank where TestID = ?", jso[0].testID, function (err, result) {
-                sst = JSON.stringify(result);
-                jsoN = JSON.parse(sst);
-                console.log(jsoN);
-    
-            })
-            resolve(jsoN);
+            
+            resolve(jso[0].TestID);
         })
     })
     p.then((message) => {
         console.log(message);
-        res.render('pages/Test_Question_List.ejs', { testname: tname, message: message })
+        db.query("select Question from question_bank where TestID = ?", message, function (err, result) {
+            sst = JSON.stringify(result);
+            jsoN = JSON.parse(sst);
+            console.log(jsoN);
+            res.render('pages/Test_Question_List.ejs', { testname: tname, message: jsoN });
+        })
+        
 
     })
 })
