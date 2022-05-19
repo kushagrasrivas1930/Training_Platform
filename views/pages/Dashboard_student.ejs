@@ -46,10 +46,13 @@
 			<div style="margin: 2em 0em 0em 5em">
 				<p style="color: #000000; font-size: 2em"><%= name %></p>
 				<p style="color: #000000; font-size: 1.25em; margin-bottom: 3em">
-					<%= stream_college %>
+					<%= regNo %>
 				</p>
-
-				<div
+				<form action="/testlist_student" method="get">
+					<button type="submit" style="margin-bottom: 1em;">Test list</button>
+				</form>
+				<% arr.forEach(element => { %>
+					<div
 					style="
 						margin-bottom: 1em;
 						background-color: #fff4db;
@@ -70,100 +73,17 @@
 							margin-bottom: 1em;
 						"
 					>
-						Test Title Celebal Test Prep 2
+						<%- element.TestID %>
 					</p>
 
 					<p>Total Questions: 62</p>
 
-					<p>Correct Questions: 62</p>
+					<p>Correct Questions: <%- element.Total %></p>
 				</div>
+				<% }); %> 
+				
 
-				<div
-					style="
-						margin-bottom: 1em;
-						background-color: #fff4db;
-						padding: 2em;
-						border-radius: 15px;
-						box-shadow: 0 0px 2px rgba(6, 38, 59, 0.158),
-							0 2px 4px rgba(0, 0, 0, 0.07), 0 4px 8px rgba(0, 87, 145, 0.247),
-							0 8px 16px rgba(137, 255, 173, 0.205),
-							0 16px 32px rgba(0, 87, 145, 0.082),
-							0 32px 64px rgba(0, 87, 145, 0.144);
-					"
-				>
-					<p
-						style="
-							font-size: 1.5em;
-							color: #005691;
-							font-weight: 500;
-							margin-bottom: 1em;
-						"
-					>
-						Test Title Celebal Test Prep 2
-					</p>
-
-					<p>Total Questions: 62</p>
-
-					<p>Correct Questions: 62</p>
-				</div>
-
-				<div
-					style="
-						margin-bottom: 1em;
-						background-color: #fff4db;
-						padding: 2em;
-						border-radius: 15px;
-						box-shadow: 0 0px 2px rgba(6, 38, 59, 0.158),
-							0 2px 4px rgba(0, 0, 0, 0.07), 0 4px 8px rgba(0, 87, 145, 0.247),
-							0 8px 16px rgba(137, 255, 173, 0.205),
-							0 16px 32px rgba(0, 87, 145, 0.082),
-							0 32px 64px rgba(0, 87, 145, 0.144);
-					"
-				>
-					<p
-						style="
-							font-size: 1.5em;
-							color: #005691;
-							font-weight: 500;
-							margin-bottom: 1em;
-						"
-					>
-						Test Title Celebal Test Prep 2
-					</p>
-
-					<p>Total Questions: 62</p>
-
-					<p>Correct Questions: 62</p>
-				</div>
-
-				<div
-					style="
-						margin-bottom: 1em;
-						background-color: #fff4db;
-						padding: 2em;
-						border-radius: 15px;
-						box-shadow: 0 0px 2px rgba(6, 38, 59, 0.158),
-							0 2px 4px rgba(0, 0, 0, 0.07), 0 4px 8px rgba(0, 87, 145, 0.247),
-							0 8px 16px rgba(137, 255, 173, 0.205),
-							0 16px 32px rgba(0, 87, 145, 0.082),
-							0 32px 64px rgba(0, 87, 145, 0.144);
-					"
-				>
-					<p
-						style="
-							font-size: 1.5em;
-							color: #005691;
-							font-weight: 500;
-							margin-bottom: 1em;
-						"
-					>
-						Test Title Celebal Test Prep 2
-					</p>
-
-					<p>Total Questions: 62</p>
-
-					<p>Correct Questions: 62</p>
-				</div>
+				
 			</div>
 
 			<div

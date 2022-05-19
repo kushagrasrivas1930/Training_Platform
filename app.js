@@ -220,9 +220,15 @@ app.post("/QuestionSubmit", (req, res) => {
 
 })
 
-// app.get("/Testlist_student", (req, res) => {
-//     res.render('pages/testlist_student.ejs', { duration: 0, apti: 0, tech: 0, eng: 0 })
-// })
+app.get("/Testlist_student", (req, res) => {
+    db.query("select TestTitle from test_details", function(err, result) {
+        var ss = JSON.stringify(result);
+        var jj = JSON.parse(ss);
+        console.log(jj);
+        res.render('pages/testlist_student.ejs', { test_name: jj })
+    })
+   
+})
 
 
 app.post("/TestDetails_student", (req, res) => {
@@ -326,13 +332,22 @@ app.post('/login', function (req, res) {
     console.log(username + ' ' + password);
     db.query("select * from student_details where RegistrationNo = ? and Password = ?", [username, password], function (err, result) {
         console.log(result);
+        var ssts = JSON.stringify(result);
+        var jjson = JSON.parse(ssts);
+
         if (result == 0) {
             console.log('No such user present TRY AGAIN');
             res.render(__dirname + '/views/pages/login.ejs');
         }
         else {
             console.log("Successfully logged in !");
-            res.render(__dirname + '/views/pages/testlist_student.ejs', { test_name: json });
+            db.query("select * from score_details where RegistrationNo = ?", jjson[0].RegistrationNo, function(err, result) {
+                var stri = JSON.stringify(result);
+                var jsson = JSON.parse(stri);
+                console.log(jsson);
+                res.render(__dirname + '/views/pages/Dashboard_student.ejs', { name: jjson[0].Name,  regNo: jjson[0].RegistrationNo, arr: jsson, test_title: "hi again its me"});
+            })
+            
         }
     })
 })
@@ -490,3 +505,27 @@ app.post('/add_FacultyTestList', function (req, res) {
 
 
 })
+
+// <!-- <script>
+			// document.addEventListener("visibilitychange", function() {
+			// 	if(! document.hidden) {
+			// 		window.confirm("Were you cheating ?");
+			// 		if (window.confirm){
+			// 			window.open('/success.html');
+			// 		}
+			// 		else {
+			// 			window.open('/success.html');
+			// 		}
+			// 	}
+				// else{
+				// 	window.confirm("Were you cheating ?");
+				// 	if (window.confirm){
+				// 		window.open('/success.html');
+				// 	}
+				// 	else {
+				// 		window.open('/success.html');
+				// 	}
+				//}
+				
+		//	});
+//		</script> -->
