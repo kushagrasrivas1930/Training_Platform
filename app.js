@@ -71,17 +71,17 @@ db.getConnection((err, connection) => {
 
 app.post("/TestQuesList", (req, res) => {
     var tname = req.body.preview;
-
+    console.log(tname);
     let p = new Promise((resolve, reject) => {
         var ss, jso, sst, jsoN;
         db.query("Select TestID from test_details where TestTitle = ?", tname, function (err, result) {
             ss = JSON.stringify(result);
             jso = JSON.parse(ss);
+            
             var tt = jso[0].testID;
-            console.log(tt);
-            db.query("select Question from question_bank where TestID = ?", message, function (err, result) {
+            db.query("select Question from question_bank where TestID = ?", jso[0].testID, function (err, result) {
                 sst = JSON.stringify(result);
-                jsoN = JSON.parse(ss);
+                jsoN = JSON.parse(sst);
                 console.log(jsoN);
     
             })
@@ -122,7 +122,9 @@ app.post("/TestMCQ", (req, res) => {
 
 
 })
-
+app.get("/StudentDashboard", (req, res) => {
+    res.render('pages/Dashboard_student.ejs',{ name : 'Kushagra Srivastava', stream_college: 'B.tech. Computer Science '})
+})
 
 
 app.get("/FacultyLogin", (req, res) => {

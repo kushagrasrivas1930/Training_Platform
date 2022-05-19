@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Test Details</title>
+		<link rel="stylesheet" href="../Login.css" />
+
+		<script
+			type="text/javascript"
+			src="https://www.gstatic.com/charts/loader.js"
+		></script>
+		<script type="text/javascript">
+			google.charts.load("current", { packages: ["corechart"] });
+			google.charts.setOnLoadCallback(drawChart);
+
+			function drawChart() {
+				var data = google.visualization.arrayToDataTable([
+					["Task", "Hours per Day"],
+					["Test 2", 11],
+					["Test 1", 2],
+					["Test 3", 2],
+					["Test 4", 2],
+					["Test 5", 7],
+				]);
+
+				var options = {
+					title: "Test-wise Score of the Student",
+					backgroundColor: "#d2e9fa",
+				};
+
+				var chart = new google.visualization.PieChart(
+					document.getElementById("piechart")
+				);
+
+				chart.draw(data, options);
+			}
+		</script>
+	</head>
+
+	<body>
+		<!-- This is the header nav bar -->
+		<%- include('../partials/header'); %>
+		<div style="display: grid">
+			<div style="margin: 2em 0em 0em 5em">
+				<p style="color: #000000; font-size: 2em"><%= name %></p>
+				<p style="color: #000000; font-size: 1.25em; margin-bottom: 3em">
+					<%= stream_college %>
+				</p>
+
+				<div
+					style="
+						margin-bottom: 1em;
+						background-color: #fff4db;
+						padding: 2em;
+						border-radius: 15px;
+						box-shadow: 0 0px 2px rgba(6, 38, 59, 0.158),
+							0 2px 4px rgba(0, 0, 0, 0.07), 0 4px 8px rgba(0, 87, 145, 0.247),
+							0 8px 16px rgba(137, 255, 173, 0.205),
+							0 16px 32px rgba(0, 87, 145, 0.082),
+							0 32px 64px rgba(0, 87, 145, 0.144);
+					"
+				>
+					<p
+						style="
+							font-size: 1.5em;
+							color: #005691;
+							font-weight: 500;
+							margin-bottom: 1em;
+						"
+					>
+						Test Title Celebal Test Prep 2
+					</p>
+
+					<p>Total Questions: 62</p>
+
+					<p>Correct Questions: 62</p>
+				</div>
+
+				<div
+					style="
+						margin-bottom: 1em;
+						background-color: #fff4db;
+						padding: 2em;
+						border-radius: 15px;
+						box-shadow: 0 0px 2px rgba(6, 38, 59, 0.158),
+							0 2px 4px rgba(0, 0, 0, 0.07), 0 4px 8px rgba(0, 87, 145, 0.247),
+							0 8px 16px rgba(137, 255, 173, 0.205),
+							0 16px 32px rgba(0, 87, 145, 0.082),
+							0 32px 64px rgba(0, 87, 145, 0.144);
+					"
+				>
+					<p
+						style="
+							font-size: 1.5em;
+							color: #005691;
+							font-weight: 500;
+							margin-bottom: 1em;
+						"
+					>
+						Test Title Celebal Test Prep 2
+					</p>
+
+					<p>Total Questions: 62</p>
+
+					<p>Correct Questions: 62</p>
+				</div>
+
+				<div
+					style="
+						margin-bottom: 1em;
+						background-color: #fff4db;
+						padding: 2em;
+						border-radius: 15px;
+						box-shadow: 0 0px 2px rgba(6, 38, 59, 0.158),
+							0 2px 4px rgba(0, 0, 0, 0.07), 0 4px 8px rgba(0, 87, 145, 0.247),
+							0 8px 16px rgba(137, 255, 173, 0.205),
+							0 16px 32px rgba(0, 87, 145, 0.082),
+							0 32px 64px rgba(0, 87, 145, 0.144);
+					"
+				>
+					<p
+						style="
+							font-size: 1.5em;
+							color: #005691;
+							font-weight: 500;
+							margin-bottom: 1em;
+						"
+					>
+						Test Title Celebal Test Prep 2
+					</p>
+
+					<p>Total Questions: 62</p>
+
+					<p>Correct Questions: 62</p>
+				</div>
+
+				<div
+					style="
+						margin-bottom: 1em;
+						background-color: #fff4db;
+						padding: 2em;
+						border-radius: 15px;
+						box-shadow: 0 0px 2px rgba(6, 38, 59, 0.158),
+							0 2px 4px rgba(0, 0, 0, 0.07), 0 4px 8px rgba(0, 87, 145, 0.247),
+							0 8px 16px rgba(137, 255, 173, 0.205),
+							0 16px 32px rgba(0, 87, 145, 0.082),
+							0 32px 64px rgba(0, 87, 145, 0.144);
+					"
+				>
+					<p
+						style="
+							font-size: 1.5em;
+							color: #005691;
+							font-weight: 500;
+							margin-bottom: 1em;
+						"
+					>
+						Test Title Celebal Test Prep 2
+					</p>
+
+					<p>Total Questions: 62</p>
+
+					<p>Correct Questions: 62</p>
+				</div>
+			</div>
+
+			<div
+				style="
+					display: grid;
+					grid-column-start: 4;
+					height: 100%;
+					background-color: #d2e9fa;
+				"
+			>
+				<div
+					style="
+						margin: 2em 2em 2em 2em;
+						background-color: #ebfffe;
+						height: fit-content;
+						padding: 2em 2em 2em 2em;
+						border-radius: 15px;
+						box-shadow: 0 0px 2px rgba(6, 38, 59, 0.158),
+							0 2px 4px rgba(0, 0, 0, 0.07), 0 4px 8px rgba(0, 87, 145, 0.247),
+							0 8px 16px rgba(137, 255, 173, 0.205),
+							0 16px 32px rgba(0, 87, 145, 0.082),
+							0 32px 64px rgba(0, 87, 145, 0.144);
+					"
+				>
+					<div style="width: fit-content">
+						<div style="display: flex">
+							<h1 style="font-size: 7em; color: #005691">65</h1>
+							<p style="padding: 1em; font-size: 1.9em; color: #619fca">
+								Questions <br />
+								Answered
+							</p>
+						</div>
+						<div>
+							<span style="color: #57cdc4; font-size: 2em; font-weight: 700">
+								42
+							</span>
+							<span style="color: #000000; font-size: 2em"> / </span>
+							<span style="color: #828282; font-size: 2em; font-weight: 700">
+								65
+							</span>
+							<span style="color: #000000; font-size: 2em"> / </span>
+							<span style="color: #cb6f52; font-size: 2em; font-weight: 700">
+								23
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div
+					id="piechart"
+					style="width: 80%; padding-left: 3em; height: 45vh"
+				></div>
+			</div>
+		</div>
+		<script>
+			console.log(test_name);
+			console.log("eureka");
+		</script>
+	</body>
+</html>
